@@ -4,6 +4,7 @@ import { Location } from '@angular/common';
 
 import { Hero }         from '../hero';
 import { HeroService }  from '../hero.service';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-hero-detail',
@@ -33,8 +34,9 @@ export class HeroDetailComponent implements OnInit {
     this.location.back();
   }
 
- save(): void {
+  save(): void {
     this.heroService.updateHero(this.hero)
+      .pipe(debounceTime(300)) 
       .subscribe(() => this.goBack());
   }
 }
